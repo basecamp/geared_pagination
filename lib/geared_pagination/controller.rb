@@ -20,7 +20,7 @@ module GearedPagination
       end
 
       def set_paginated_headers
-        GearedPagination::Headers.new(page: @page, controller: self).apply if @page.is_a?
+        GearedPagination::Headers.new(page: @page, controller: self).apply if @page.is_a?(GearedPagination::Page)
       end
 
       def current_page_param
