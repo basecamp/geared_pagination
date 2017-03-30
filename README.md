@@ -6,7 +6,7 @@ initial request as quickly as possible. This is particularly the case when using
 in combination with an infinite scrolling UI.
 
 Geared Pagination allows you to define different ratios. By default, we will return 15 elements on page 1,
-30 on page 2, 50 on page 3, and 100 from page 4 and forward. This has proben to be a very sensible set of
+30 on page 2, 50 on page 3, and 100 from page 4 and forward. This has proven to be a very sensible set of
 ratios for much of the Basecamp UIs. But you can of course tweak the ratios, use fewer, or even none at all,
 if you certain page calls for a fixed-rate scheme.
 
