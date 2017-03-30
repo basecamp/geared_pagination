@@ -10,7 +10,7 @@ Geared Pagination allows you to define different ratios. By default, we will ret
 ratios for much of the Basecamp UIs. But you can of course tweak the ratios, use fewer, or even none at all,
 if you certain page calls for a fixed-rate scheme.
 
-On json actions that set a page, we'll also also automatically set Link and X-Total-Count headers for APIs
+On json actions that set a page, we'll also automatically set Link and X-Total-Count headers for APIs
 to be able to page through a collection.
 
 ## Example
