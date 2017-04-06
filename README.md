@@ -24,7 +24,7 @@ end
 
 # app/views/messages/index.html.erb
 
-Showing page <%= @page.number %> of <%= @page.collection.page_count %> (<%= @page.collection.record_count %> total messages):
+Showing page <%= @page.number %> of <%= @page.collection.page_count %> (<%= @page.collection.records_count %> total messages):
 
 <%= render @page.records %>
 
