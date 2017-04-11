@@ -24,7 +24,7 @@ module GearedPagination
           residual = residual - ratios[count]
         end
 
-        count
+        count > 0 ? count : 1
       end
     end
 
