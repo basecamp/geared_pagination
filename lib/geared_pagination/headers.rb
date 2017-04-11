@@ -13,7 +13,7 @@ module GearedPagination
     private
       def headers
         Hash.new.tap do |h|
-          h["X-Total-Count"] = @page.collection.records_count.to_s
+          h["X-Total-Count"] = @page.recordset.records_count.to_s
           h["Link"] = next_page_link_header unless @page.last?
         end
       end

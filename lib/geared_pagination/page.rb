@@ -2,15 +2,15 @@ require 'geared_pagination/portion'
 
 module GearedPagination
   class Page
-    attr_reader :number, :collection
+    attr_reader :number, :recordset
 
     def initialize(number, from:)
-      @number, @collection = number, from
+      @number, @recordset = number, from
       @portion = GearedPagination::Portion.new(page_number: number, per_page: from.ratios)
     end
 
     def records
-      @records ||= @portion.from(collection.records)
+      @records ||= @portion.from(recordset.records)
     end
 
 
@@ -28,11 +28,11 @@ module GearedPagination
     end
 
     def only?
-      collection.page_count == 1
+      recordset.page_count == 1
     end
 
     def last?
-      number == collection.page_count
+      number == recordset.page_count
     end
 
 

@@ -1,7 +1,7 @@
 # Geared Pagination
 
 Most pagination schemes use a fixed page size. Page 1 returns as many elements as page 2. But that's
-frequently not the most sensible way to page through a large collection when you care about serving the
+frequently not the most sensible way to page through a large recordset when you care about serving the
 initial request as quickly as possible. This is particularly the case when using the pagination scheme
 in combination with an infinite scrolling UI.
 
@@ -11,7 +11,7 @@ ratios for much of the Basecamp UIs. But you can of course tweak the ratios, use
 if a certain page calls for a fixed-rate scheme.
 
 On json actions that set a page, we'll also automatically set Link and X-Total-Count headers for APIs
-to be able to page through a collection.
+to be able to page through a recordset.
 
 ## Example
 
@@ -24,7 +24,7 @@ end
 
 # app/views/messages/index.html.erb
 
-Showing page <%= @page.number %> of <%= @page.collection.page_count %> (<%= @page.collection.records_count %> total messages):
+Showing page <%= @page.number %> of <%= @page.recordset.page_count %> (<%= @page.recordset.records_count %> total messages):
 
 <%= render @page.records %>
 
