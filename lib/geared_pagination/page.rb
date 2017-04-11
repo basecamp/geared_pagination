@@ -39,5 +39,10 @@ module GearedPagination
     def next_number
       number + 1
     end
+
+
+    def cache_key
+      @portion.cache_key
+    end
   end
 end

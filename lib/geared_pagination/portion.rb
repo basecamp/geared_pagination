@@ -19,5 +19,10 @@ module GearedPagination
     def offset
       (page_number - 1).times.sum { |index| ratios[index + 1] }
     end
+
+
+    def cache_key
+      "#{page_number}:#{ratios.cache_key}"
+    end
   end
 end

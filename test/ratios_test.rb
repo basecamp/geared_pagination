@@ -24,4 +24,8 @@ class GearedPagination::RatiosTest < ActiveSupport::TestCase
     assert_equal GearedPagination::Ratios::DEFAULTS.first, limits[1]
     assert_equal GearedPagination::Ratios::DEFAULTS.last, limits[99]
   end
+
+  test "cache key" do
+    assert_equal "1-2-3", GearedPagination::Ratios.new([ 1, 2, 3 ]).cache_key
+  end
 end

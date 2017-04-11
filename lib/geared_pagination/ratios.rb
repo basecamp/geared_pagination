@@ -9,5 +9,9 @@ module GearedPagination
     def [](page_number)
       @ratios[page_number - 1] || @ratios.last
     end
+
+    def cache_key
+      @ratios.join('-')
+    end
   end
 end

@@ -28,4 +28,15 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
     assert page_for_empty_set.only?
     assert page_for_empty_set.last?
   end
+
+  test "cache key changes according to current page and gearing" do
+    assert_equal '2:3', cache_key(page: 2, per_page: 3)
+    assert_equal '2:1-3', cache_key(page: 2, per_page: [ 1, 3 ])
+    assert_equal '2:2-3', cache_key(page: 2, per_page: [ 2, 3 ])
+  end
+
+  private
+    def cache_key(page:, per_page:)
+      GearedPagination::Recordset.new(Recording.all, per_page: per_page).page(page).cache_key
+    end
 end
