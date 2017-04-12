@@ -10,7 +10,7 @@ Geared Pagination allows you to define different ratios. By default, we will ret
 ratios for much of the Basecamp UIs. But you can of course tweak the ratios, use fewer, or even none at all,
 if a certain page calls for a fixed-rate scheme.
 
-On json actions that set a page, we'll also automatically set Link and X-Total-Count headers for APIs
+On JSON actions that set a page, we'll also automatically set Link and X-Total-Count headers for APIs
 to be able to page through a recordset.
 
 ## Example
@@ -18,7 +18,7 @@ to be able to page through a recordset.
 ```ruby
 class MessagesController < ApplicationController
   def index
-    @page = current_page_from Message.order(created_at: :desc)
+    set_page_and_extract_portion_from Message.order(created_at: :desc)
   end
 end
 
