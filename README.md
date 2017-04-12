@@ -10,7 +10,7 @@ Geared Pagination allows you to define different ratios. By default, we will ret
 ratios for much of the Basecamp UIs. But you can of course tweak the ratios, use fewer, or even none at all,
 if a certain page calls for a fixed-rate scheme.
 
-On json actions that set a page, we'll also automatically set Link and X-Total-Count headers for APIs
+On JSON actions that set a page, we'll also automatically set Link and X-Total-Count headers for APIs
 to be able to page through a recordset.
 
 ## Example
@@ -18,7 +18,7 @@ to be able to page through a recordset.
 ```ruby
 class MessagesController < ApplicationController
   def index
-    @page = current_page_from Message.order(created_at: :desc)
+    set_page_and_extract_portion_from Message.order(created_at: :desc)
   end
 end
 
@@ -35,6 +35,28 @@ Showing page <%= @page.number %> of <%= @page.recordset.page_count %> (<%= @page
 <% end %>
 
 ```
+
+
+## Caching
+
+To account for the current page in fragment caches, include the `@page` directly.
+That includes the current page number and gear ratios.
+
+Fragment caching a message's comments:
+```ruby
+<% cache [ @message, @page ] do %>
+  <%= render @page.records %>
+<% end %>
+```
+
+NOTE: The page does not include cache keys for all the records. That would require loading all the records,
+defeating the purpose of using the cache. Use a parent record, like a message that's touched when
+new comments are posted, as the cache key instead.
+
+## ETags
+
+When a controller action sets an ETag and uses geared pagination, the current page and gear ratios are
+automatically included in the ETag.
 
 ## License
 Geared Pagination is released under the [MIT License](https://opensource.org/licenses/MIT).
