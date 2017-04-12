@@ -39,9 +39,8 @@ Showing page <%= @page.number %> of <%= @page.recordset.page_count %> (<%= @page
 
 ## Caching
 
-To account for the current page in ETags and fragment caches, include the `@page` directly. That uses
-`@page.cache_key` which reflects the current page number and gear ratios.
-
+To account for the current page in fragment caches, include the `@page` directly.
+That includes the current page number and gear ratios.
 
 Fragment caching a message's comments:
 ```ruby
@@ -50,14 +49,14 @@ Fragment caching a message's comments:
 <% end %>
 ```
 
-Including the current page in an ETag:
-```ruby
-etag { @page }
-```
-
 NOTE: The page does not include cache keys for all the records. That would require loading all the records,
-defeating the purpose of using the cache or ETag. Use a parent record, like a message that's touched when
+defeating the purpose of using the cache. Use a parent record, like a message that's touched when
 new comments are posted, as the cache key instead.
+
+## ETags
+
+When a controller action sets an ETag and uses geared pagination, the current page and gear ratios are
+automatically included in the ETag.
 
 ## License
 Geared Pagination is released under the [MIT License](https://opensource.org/licenses/MIT).

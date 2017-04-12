@@ -7,6 +7,7 @@ module GearedPagination
 
     included do
       after_action :set_paginated_headers
+      etag { @page if geared_page? }
     end
 
     private
@@ -20,7 +21,11 @@ module GearedPagination
       end
 
       def set_paginated_headers
-        GearedPagination::Headers.new(page: @page, controller: self).apply if @page.is_a?(GearedPagination::Page)
+        GearedPagination::Headers.new(page: @page, controller: self).apply if geared_page?
+      end
+
+      def geared_page?
+        @page.is_a? GearedPagination::Page
       end
 
       def current_page_param
