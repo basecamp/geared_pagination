@@ -42,7 +42,7 @@ module GearedPagination
 
 
     def cache_key
-      @portion.cache_key
+      "page/#{@portion.cache_key}"
     end
   end
 end

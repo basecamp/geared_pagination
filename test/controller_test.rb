@@ -33,7 +33,7 @@ class GearedPagination::ControllerTest < ActionController::TestCase
 
   test "ETag includes the current page and gearing" do
     get :index, params: { per_page: [ 1, 2 ] }
-    assert_equal etag_for("placeholder", "1:1-2"), response.etag
+    assert_equal etag_for("placeholder", "page/1:1-2"), response.etag
     etag_before_gearing_change = response.etag
 
     get :index, params: { page: 1, per_page: [ 1, 2 ] }

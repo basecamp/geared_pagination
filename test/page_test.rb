@@ -30,9 +30,9 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
   end
 
   test "cache key changes according to current page and gearing" do
-    assert_equal '2:3', cache_key(page: 2, per_page: 3)
-    assert_equal '2:1-3', cache_key(page: 2, per_page: [ 1, 3 ])
-    assert_equal '2:2-3', cache_key(page: 2, per_page: [ 2, 3 ])
+    assert_equal 'page/2:3', cache_key(page: 2, per_page: 3)
+    assert_equal 'page/2:1-3', cache_key(page: 2, per_page: [ 1, 3 ])
+    assert_equal 'page/2:2-3', cache_key(page: 2, per_page: [ 2, 3 ])
   end
 
   private
