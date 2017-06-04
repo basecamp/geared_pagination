@@ -17,7 +17,7 @@ module GearedPagination
       end
 
       def current_page_from(records, per_page: nil)
-        GearedPagination::Recordset.new(records, per_page: per_page).page(current_page_param)
+        GearedPagination::Recordset.new(records, per_page: per_page).page(current_page)
       end
 
       def set_paginated_headers
@@ -28,8 +28,12 @@ module GearedPagination
         @page.is_a? GearedPagination::Page
       end
 
+      def current_page
+        current_page_param > 0 ? current_page_param : 1
+      end
+
       def current_page_param
-        params[:page].to_i > 0 ? params[:page].to_i : 1
+        params[:page].to_i
       end
   end
 end
