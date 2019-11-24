@@ -21,6 +21,10 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
     assert_equal 2, GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(1).next_number
   end
 
+  test "previous_number" do
+    assert_equal 1, GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(2).previous_number
+  end
+
   test "with empty recordset" do
     page_for_empty_set = GearedPagination::Recordset.new(Recordings.new([]), per_page: 1000).page(1)
 
