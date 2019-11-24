@@ -40,6 +40,9 @@ module GearedPagination
       number + 1
     end
 
+    def previous_number
+      number - 1
+    end
 
     def cache_key
       "page/#{@portion.cache_key}"
