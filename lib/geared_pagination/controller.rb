@@ -11,13 +11,13 @@ module GearedPagination
     end
 
     private
-      def set_page_and_extract_portion_from(records, per_page: nil)
-        @page = current_page_from(records, per_page: per_page)
+      def set_page_and_extract_portion_from(records, ordered_by: nil, per_page: nil)
+        @page = current_page_from(records, ordered_by: ordered_by, per_page: per_page)
         @page.records
       end
 
-      def current_page_from(records, per_page: nil)
-        GearedPagination::Recordset.new(records, per_page: per_page).page(current_page_param)
+      def current_page_from(records, ordered_by: nil, per_page: nil)
+        GearedPagination::Recordset.new(records, ordered_by: ordered_by, per_page: per_page).page(current_page_param)
       end
 
       def set_paginated_headers
@@ -29,7 +29,7 @@ module GearedPagination
       end
 
       def current_page_param
-        params[:page].to_i > 0 ? params[:page].to_i : 1
+        params[:page]
       end
   end
 end

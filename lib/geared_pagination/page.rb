@@ -1,12 +1,13 @@
-require 'geared_pagination/portion'
-
 module GearedPagination
   class Page
-    attr_reader :number, :recordset
+    attr_reader :recordset
 
-    def initialize(number, from:)
-      @number, @recordset = number, from
-      @portion = GearedPagination::Portion.new(page_number: number, per_page: from.ratios)
+    def initialize(portion, from:)
+      @portion, @recordset = portion, from
+    end
+
+    def number
+      @portion.page_number
     end
 
     def records
@@ -36,8 +37,8 @@ module GearedPagination
     end
 
 
-    def next_number
-      number + 1
+    def next_param
+      @portion.next_param recordset.records
     end
 
 

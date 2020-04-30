@@ -28,7 +28,7 @@ class GearedPagination::HeadersTest < ActiveSupport::TestCase
   end
 
   test "no link for json request with single page" do
-    GearedPagination::Headers.new(page: @many_page_recordset.page(1), controller: @controller_serving_html).apply
+    GearedPagination::Headers.new(page: @single_page_recordset.page(1), controller: @controller_serving_json).apply
     assert @controller_serving_html.headers["Link"].nil?
   end
 
