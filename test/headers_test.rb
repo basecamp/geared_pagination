@@ -8,11 +8,13 @@ class GearedPagination::HeadersTest < ActiveSupport::TestCase
   Controller = Struct.new(:request, :headers)
 
   setup do
+    create_recordings
+
     @controller_serving_json = Controller.new(Request.new("http://example.com/recordset.json", "json".inquiry), {})
     @controller_serving_html = Controller.new(Request.new("http://example.com/recordset", "html".inquiry), {})
 
-    @single_page_recordset = GearedPagination::Recordset.new(Recording.all, per_page: 1000) 
-    @many_page_recordset   = GearedPagination::Recordset.new(Recording.all, per_page: 1) 
+    @single_page_recordset = GearedPagination::Recordset.new(Recording.all, per_page: 1000)
+    @many_page_recordset   = GearedPagination::Recordset.new(Recording.all, per_page: 1)
   end
 
   test "total count" do

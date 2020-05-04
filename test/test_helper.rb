@@ -1,5 +1,13 @@
-require 'bundler/setup'
-require 'active_support'
-require 'active_support/testing/autorun'
+ENV['RAILS_ENV'] = 'test'
+
+require_relative './dummy/config/environment'
+
+require 'rails/test_help'
 require 'byebug'
-require 'recording_stubs'
+
+class ActiveSupport::TestCase
+  private
+    def create_recordings(count: 120)
+      count.times { |i| Recording.create number: i + 1 }
+    end
+end

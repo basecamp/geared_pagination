@@ -4,4 +4,6 @@ gemspec
 
 gem 'rake'
 gem 'byebug'
-gem 'actionpack', '>= 5'
+
+gem 'rails', '>= 5.0'
+gem 'sqlite3'
