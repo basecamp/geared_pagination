@@ -1,4 +1,4 @@
-require 'rails/railtie'
+require 'rails/engine'
 require 'geared_pagination/controller'
 
 class GearedPagination::Engine < ::Rails::Engine

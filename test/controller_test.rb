@@ -4,32 +4,10 @@ require 'geared_pagination/controller'
 require 'active_support/all'
 require 'action_controller'
 
-class RecordingsController < ActionController::Base
-  include GearedPagination::Controller
-
-  def index
-    set_page_and_extract_portion_from Recording.all, per_page: params[:per_page]
-    render json: @page.records if stale? etag: "placeholder"
-  end
-
-  def unpaged
-    @page = "not a geared pagination page"
-    head :ok if stale? etag: "placeholder"
-  end
-end
-
 class GearedPagination::ControllerTest < ActionController::TestCase
   tests RecordingsController
 
-  setup do
-    @routes = ActionDispatch::Routing::RouteSet.new.tap do |r|
-      r.draw do
-        resources :recordings do
-          get :unpaged, on: :collection
-        end
-      end
-    end
-  end
+  setup :create_recordings
 
   test "ETag includes the current page and gearing" do
     get :index, params: { per_page: [ 1, 2 ] }
@@ -61,6 +39,6 @@ class GearedPagination::ControllerTest < ActionController::TestCase
 
   private
     def etag_for(*keys)
-      %(W/"#{Digest::MD5.hexdigest(ActiveSupport::Cache.expand_cache_key(keys))}")
+      %(W/"#{ActiveSupport::Digest.hexdigest(ActiveSupport::Cache.expand_cache_key(keys))}")
     end
 end

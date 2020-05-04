@@ -1,2 +1,2 @@
 require 'geared_pagination/recordset'
-require 'geared_pagination/railtie' if defined?(Rails)
+require 'geared_pagination/engine' if defined?(Rails)

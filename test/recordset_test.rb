@@ -2,6 +2,8 @@ require 'test_helper'
 require 'geared_pagination/recordset'
 
 class GearedPagination::RecordsetTest < ActiveSupport::TestCase
+  setup :create_recordings
+
   test "single limit pagination" do
     recordset = GearedPagination::Recordset.new(Recording.all, per_page: 10)
 

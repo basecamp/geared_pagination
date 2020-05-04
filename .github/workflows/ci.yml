@@ -19,8 +19,11 @@ jobs:
           key: ${{ runner.os }}-bundler-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: ${{ runner.os }}-bundler-
 
-      - name: Install dependencies
-        run: gem install bundler && bundle install --jobs 4 --retry 3 --path vendor/bundle
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install libsqlite3-dev
+
+      - name: Install gem dependencies
+        run:  gem install bundler && bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Run tests
         run: bundle exec rake test

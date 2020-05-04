@@ -2,6 +2,8 @@ require 'test_helper'
 require 'geared_pagination/recordset'
 
 class GearedPagination::PageTest < ActiveSupport::TestCase
+  setup :create_recordings
+
   test "first" do
     assert GearedPagination::Recordset.new(Recording.all).page(1).first?
     assert_not GearedPagination::Recordset.new(Recording.all).page(2).first?
@@ -22,7 +24,7 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
   end
 
   test "with empty recordset" do
-    page_for_empty_set = GearedPagination::Recordset.new(Recordings.new([]), per_page: 1000).page(1)
+    page_for_empty_set = GearedPagination::Recordset.new(Recording.none, per_page: 1000).page(1)
 
     assert page_for_empty_set.first?
     assert page_for_empty_set.only?
