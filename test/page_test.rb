@@ -23,13 +23,16 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
     assert_equal 2, GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(1).next_param
   end
 
-  test "next cursor key" do
+  test "next cursor param" do
     assert_equal GearedPagination::Cursor.encode(page_number: 2, values: { number: 15 }),
-      GearedPagination::Recordset.new(
-        Recording.all,
-        ordered_by: [ GearedPagination::Order.new(attribute: :number, direction: :asc) ],
-        per_page: 15
-      ).page(GearedPagination::Cursor.encode(page_number: 1)).next_param
+      GearedPagination::Recordset.new(Recording.all, ordered_by: :number, per_page: 15)
+        .page(GearedPagination::Cursor.encode(page_number: 1)).next_param
+  end
+
+  test "next number" do
+    assert_deprecated do
+      assert_equal 2, GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(1).next_number
+    end
   end
 
   test "with empty recordset" do

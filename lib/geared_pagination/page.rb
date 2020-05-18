@@ -1,3 +1,5 @@
+require 'active_support/core_ext/module/deprecation'
+
 module GearedPagination
   class Page
     attr_reader :recordset
@@ -40,6 +42,9 @@ module GearedPagination
     def next_param
       @portion.next_param recordset.records
     end
+
+    alias_method :next_number, :next_param
+    deprecate next_number: "use #next_param instead"
 
 
     def cache_key
