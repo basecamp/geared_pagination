@@ -40,6 +40,18 @@ class GearedPagination::PortionAtCursorTest < ActiveSupport::TestCase
         cursor: GearedPagination::Cursor.new(page_number: 3, values: { number: 76 }), ordered_by: ORDERS).from(Recording.all).to_a
   end
 
+  test "with ordered scope" do
+    assert_raises ArgumentError do
+      GearedPagination::PortionAtCursor.new(ordered_by: ORDERS).from(Recording.order(id: :asc))
+    end
+  end
+
+  test "with limited scope" do
+    assert_raises ArgumentError do
+      GearedPagination::PortionAtCursor.new(ordered_by: ORDERS).from(Recording.limit(100))
+    end
+  end
+
   test "next param" do
     create_recordings
 
