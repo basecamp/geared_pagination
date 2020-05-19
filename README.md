@@ -54,7 +54,7 @@ You may prefer to use *cursor-based pagination* instead. In cursor-based paginat
 SELECT *
 FROM messages
 WHERE (created_at = '2019-01-24T12:35:26.381Z' AND id < 7354857)
-OR id < 7354857
+OR created_at < '2019-01-24T12:35:26.381Z'
 ORDER BY created_at DESC, id DESC
 LIMIT 30
 ```
