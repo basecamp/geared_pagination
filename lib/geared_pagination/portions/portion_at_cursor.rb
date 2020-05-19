@@ -62,7 +62,7 @@ module GearedPagination
 
           def condition_on(cursor)
             if orders.all? { |order| cursor.include?(order.attribute) }
-              conditions_on(cursor).reduce { |left, right| table.grouping(left).or(right) }
+              conditions_on(cursor).reduce { |left, right| left.or(right) }
             end
           end
 
