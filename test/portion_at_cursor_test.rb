@@ -32,6 +32,14 @@ class GearedPagination::PortionAtCursorTest < ActiveSupport::TestCase
     assert_equal Recording.order(number: :desc, id: :desc).offset(45).limit(50).to_a, portion.from(Recording.all).to_a
   end
 
+  test "with incomplete cursor" do
+    create_recordings
+
+    assert_equal Recording.order(number: :desc, id: :desc).limit(50).to_a,
+      GearedPagination::PortionAtCursor.new(
+        cursor: GearedPagination::Cursor.new(page_number: 3, values: { number: 76 }), ordered_by: ORDERS).from(Recording.all).to_a
+  end
+
   test "next param" do
     create_recordings
 

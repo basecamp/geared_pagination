@@ -61,13 +61,15 @@ module GearedPagination
           delegate :table, to: :scope
 
           def condition_on(cursor)
-            if orders.all? { |order| cursor.include?(order.attribute) }
-              conditions_on(cursor).reduce { |left, right| left.or(right) }
-            end
+            conditions_on(cursor).reduce { |left, right| left.or(right) }
           end
 
           def conditions_on(cursor)
-            matches.collect { |match| match.condition_on(table, cursor) }
+            if orders.all? { |order| cursor.include?(order.attribute) }
+              matches.collect { |match| match.condition_on(table, cursor) }
+            else
+              []
+            end
           end
 
           def matches
