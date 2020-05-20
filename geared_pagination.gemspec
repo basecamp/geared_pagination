@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name     = 'geared_pagination'
-  s.version  = '0.2'
+  s.version  = '1.0.0'
   s.authors  = 'David Heinemeier Hansson'
   s.email    = 'david@basecamp.com'
   s.summary  = 'Paginate Active Record sets at variable speeds'
@@ -14,6 +14,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'bundler', '~> 1.12'
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- test/*`.split("\n")
+  s.files      = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- test/*`.split("\n")
 end
