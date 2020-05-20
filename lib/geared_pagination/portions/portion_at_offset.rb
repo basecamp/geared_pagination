@@ -1,10 +1,10 @@
 require 'geared_pagination/ratios'
 
 module GearedPagination
-  class Portion
+  class PortionAtOffset
     attr_reader :page_number, :ratios
 
-    def initialize(page_number: 1, per_page: GearedPagination::Ratios.new)
+    def initialize(page_number: 1, per_page: Ratios.new)
       @page_number, @ratios = page_number, per_page
     end
 
@@ -18,6 +18,10 @@ module GearedPagination
 
     def offset
       (page_number - 1).times.sum { |index| ratios[index + 1] }
+    end
+
+    def next_param(*)
+      page_number + 1
     end
 
 

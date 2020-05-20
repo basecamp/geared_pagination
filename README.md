@@ -30,12 +30,57 @@ Showing page <%= @page.number %> of <%= @page.recordset.page_count %> (<%= @page
 
 <% if @page.last? %>
   No more pages!
-<% else %> 
-  <%= link_to "Next page", messages_path(page: @page.next_number) %>
+<% else %>
+  <%= link_to "Next page", messages_path(page: @page.next_param) %>
 <% end %>
 
 ```
 
+## Cursor-based pagination
+
+By default, Geared Pagination uses *offset-based pagination*: the `page` query parameter contains the page number. Each page’s records are located using a query with an `OFFSET` clause, like so:
+
+```sql
+SELECT *
+FROM messages
+ORDER BY created_at DESC
+LIMIT 30
+OFFSET 15
+```
+
+You may prefer to use *cursor-based pagination* instead. In cursor-based pagination, the `page` parameter contains a “cursor” describing the last row of the previous page. Each page’s records are located using a query with conditions that only match records after the previous page. For example, if the last record on the previous page had a `created_at` value of `2019-01-24T12:35:26.381Z` and an ID of `7354857`, the current page’s records would be found with a query like this one:
+
+```sql
+SELECT *
+FROM messages
+WHERE (created_at = '2019-01-24T12:35:26.381Z' AND id < 7354857)
+OR created_at < '2019-01-24T12:35:26.381Z'
+ORDER BY created_at DESC, id DESC
+LIMIT 30
+```
+
+Geared Pagination supports cursor-based pagination. To use it, pass the `:order_by` option to `set_page_and_extract_portion_from` in your controllers. Provide the orders to apply to the paginated relation:
+
+```ruby
+set_page_and_extract_portion_from Message.all, ordered_by: { created_at: :desc, id: :desc }
+```
+
+Geared Pagination uses the ordered attributes (in the above example, `created_at` and `id`) to generate cursors:
+
+```erb
+<%= link_to "Next page", messages_path(page: @page.next_param) %>
+<!-- <a href="/messages?page=eyJwYWdlX251...">Next page</a> -->
+```
+
+Cursors encode the information Geared Pagination needs to query for the corresponding page’s records: the page number for choosing a page size, and the values of each of the ordered attributes (`created_at` and `id`).
+
+### When should I use cursor-based pagination?
+
+Cursor-based pagination can outperform offset-based pagination when paginating deeply into a large number of records. DBs commonly execute queries with `OFFSET` clauses by counting past `OFFSET` records one at a time, so each page in offset-based pagination takes slightly longer to load than the last. With cursor-based pagination and an appropriate index, the DB can jump directly to the beginning of each page without scanning.
+
+The tradeoff is that Geared Pagination only supports cursor-based pagination on simple relations with simple, column-only orders. Cursor-based pagination also won’t perform better than offset-based pagination without an ordered index. Stick with offset-based pagination if:
+* You need complex ordering on a complex relation
+* You’re paginating a small and/or bounded number of records
 
 ## Caching
 
