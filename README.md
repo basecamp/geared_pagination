@@ -59,7 +59,7 @@ ORDER BY created_at DESC, id DESC
 LIMIT 30
 ```
 
-Geared Pagination supports cursor-based pagination. To use it, pass the `:order_by` option to `set_page_and_extract_portion_from` in your controllers. Provide the orders to apply to the paginated relation:
+Geared Pagination supports cursor-based pagination. To use it, pass the `:ordered_by` option to `set_page_and_extract_portion_from` in your controllers. Provide the orders to apply to the paginated relation:
 
 ```ruby
 set_page_and_extract_portion_from Message.all, ordered_by: { created_at: :desc, id: :desc }
