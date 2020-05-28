@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    geared_pagination (0.2)
+    geared_pagination (1.0.1)
       activesupport (>= 5.0)
       addressable (>= 2.5.0)
 
@@ -63,8 +63,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    addressable (2.5.2)
-      public_suffix (>= 2.0.2, < 4.0)
+    addressable (2.7.0)
+      public_suffix (>= 2.0.2, < 5.0)
     builder (3.2.4)
     byebug (10.0.2)
     concurrent-ruby (1.1.6)
@@ -89,7 +89,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
-    public_suffix (3.0.3)
+    public_suffix (4.0.5)
     rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
