@@ -1,3 +1,4 @@
+*.gem
 .byebug_history
 
 test/dummy/db/*.sqlite3
