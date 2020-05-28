@@ -35,7 +35,7 @@ module GearedPagination
     end
 
     def last?
-      number == recordset.page_count
+      number >= recordset.page_count
     end
 
 
