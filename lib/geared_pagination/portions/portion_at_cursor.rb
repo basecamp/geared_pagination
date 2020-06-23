@@ -34,7 +34,7 @@ module GearedPagination
       end
 
       def orderings
-        orders.to_h { |order| [ order.attribute, order.direction ] }
+        orders.map { |order| [ order.attribute, order.direction ] }.to_h
       end
 
       def limit
