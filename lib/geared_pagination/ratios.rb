@@ -3,7 +3,7 @@ module GearedPagination
     DEFAULTS = [ 15, 30, 50, 100 ]
 
     def initialize(ratios = nil)
-      @ratios = Array(ratios || DEFAULTS)
+      @ratios = Array(ratios || DEFAULTS).map(&:to_i)
     end
 
     def [](page_number)

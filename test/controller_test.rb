@@ -14,6 +14,9 @@ class GearedPagination::ControllerTest < ActionController::TestCase
     assert_equal etag_for("placeholder", "page/1:1-2"), response.etag
     etag_before_gearing_change = response.etag
 
+    get :index, params: { page: 2, per_page: [ 1, 2 ] }
+    assert_equal etag_for("placeholder", "page/2:1-2"), response.etag
+
     get :index, params: { page: 1, per_page: [ 1, 2 ] }
     assert_equal etag_before_gearing_change, response.etag
 
