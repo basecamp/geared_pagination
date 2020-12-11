@@ -17,7 +17,10 @@ module GearedPagination
     end
 
     def offset
-      (page_number - 1).times.sum { |index| ratios[index + 1] }
+      variable = [(page_number - 1), ratios.size - 1].min.times.sum { |index| ratios[index + 1] }
+      fixed = [page_number - ratios.size, 0].max * ratios.fixed
+
+      variable + fixed
     end
 
     def next_param(*)
