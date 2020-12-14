@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name     = 'geared_pagination'
-  s.version  = '1.0.1'
+  s.version  = '1.0.2'
   s.authors  = 'David Heinemeier Hansson'
   s.email    = 'david@basecamp.com'
   s.summary  = 'Paginate Active Record sets at variable speeds'
