@@ -7,6 +7,9 @@ class GearedPagination::PortionAtOffsetTest < ActiveSupport::TestCase
     assert_equal 0, GearedPagination::PortionAtOffset.new(page_number: 1).offset
     assert_equal GearedPagination::Ratios::DEFAULTS.first, GearedPagination::PortionAtOffset.new(page_number: 2).offset
     assert_equal GearedPagination::Ratios::DEFAULTS.first + GearedPagination::Ratios::DEFAULTS.second, GearedPagination::PortionAtOffset.new(page_number: 3).offset
+    assert_equal 4.times.sum { |index| GearedPagination::Ratios::DEFAULTS[index] || GearedPagination::Ratios::DEFAULTS.last }, GearedPagination::PortionAtOffset.new(page_number: 5).offset
+    assert_equal 5.times.sum { |index| GearedPagination::Ratios::DEFAULTS[index] || GearedPagination::Ratios::DEFAULTS.last }, GearedPagination::PortionAtOffset.new(page_number: 6).offset
+    assert_equal 9.times.sum { |index| GearedPagination::Ratios::DEFAULTS[index] || GearedPagination::Ratios::DEFAULTS.last }, GearedPagination::PortionAtOffset.new(page_number: 10).offset
   end
 
   test "limit" do
