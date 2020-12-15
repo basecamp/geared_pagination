@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    geared_pagination (1.0.2)
+    geared_pagination (1.1.0)
       activesupport (>= 5.0)
       addressable (>= 2.5.0)
 
