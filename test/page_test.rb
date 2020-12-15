@@ -20,8 +20,13 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
   end
 
   test "last with page number greater than page count" do
-    page_for_empty_set = GearedPagination::Recordset.new(Recording.none, per_page: 1000).page(2)
-    assert page_for_empty_set.last?
+    assert_not GearedPagination::Recordset.new(Recording.none, per_page: 1000).page(2).last?
+  end
+
+  test "before_last" do
+    assert     GearedPagination::Recordset.new(Recording.all, per_page:    1).page(1).before_last?
+    assert_not GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(1).before_last?
+    assert_not GearedPagination::Recordset.new(Recording.none, per_page: 1000).page(2).before_last?
   end
 
   test "next offset param" do
