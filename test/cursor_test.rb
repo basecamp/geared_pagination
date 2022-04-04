@@ -7,6 +7,11 @@ class GearedPagination::CursorTest < ActiveSupport::TestCase
     assert_equal 1, GearedPagination::Cursor.from_param(" ").page_number
   end
 
+  test "from an invalid param" do
+    assert_equal 1, GearedPagination::Cursor.from_param("aGVsbG8K").page_number
+    assert_equal 1, GearedPagination::Cursor.from_param("\o/ not base64").page_number
+  end
+
   test "decode" do
     assert_equal 1, GearedPagination::Cursor.decode("eyJwYWdlX251bWJlciI6MX0=").page_number
   end
