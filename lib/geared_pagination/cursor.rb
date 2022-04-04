@@ -6,6 +6,8 @@ module GearedPagination
     class << self
       def from_param(key)
         key.present? ? decode(key) : new
+      rescue ArgumentError, JSON::ParserError
+        new
       end
 
       def decode(key)
