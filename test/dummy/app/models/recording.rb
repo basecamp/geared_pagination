@@ -1,2 +1,0 @@
-class Recording < ApplicationRecord
-end
