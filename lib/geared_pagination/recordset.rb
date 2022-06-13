@@ -32,7 +32,7 @@ module GearedPagination
     end
 
     def records_count
-      @records_count ||= records.unscope(:limit).unscope(:offset).count
+      @records_count ||= records.unscope(:limit).unscope(:offset).unscope(:select).count
     end
 
     private

@@ -70,4 +70,10 @@ class GearedPagination::RecordsetTest < ActiveSupport::TestCase
   test "records count" do
     assert_equal Recording.all.count, GearedPagination::Recordset.new(Recording.all, per_page: [ 10, 15, 20 ]).records_count
   end
+
+  test "unscope select for count" do
+    select_scoped_records = Recording.all.select(:id, :number)
+    recordset = GearedPagination::Recordset.new(select_scoped_records, per_page: [ 10, 15, 20 ])
+    assert_equal Recording.all.count, recordset.records_count
+  end
 end
