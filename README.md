@@ -74,6 +74,12 @@ Geared Pagination uses the ordered attributes (in the above example, `created_at
 
 Cursors encode the information Geared Pagination needs to query for the corresponding page’s records: the page number for choosing a page size, and the values of each of the ordered attributes (`created_at` and `id`).
 
+Since 7.0.2, [Rails generate datetime columns with a default precision of 6](https://github.com/rails/rails/blob/v7.0.2.3/activerecord/CHANGELOG.md#rails-702-february-08-2022). But by default the time precision for JSON encoding is 3. It could lead to unexpected result. To fix this, you need to [change the value to 6](https://guides.rubyonrails.org/configuring.html#config-active-support-time-precision):
+
+```ruby
+ActiveSupport::JSON::Encoding.time_precision = 6
+```
+
 ### When should I use cursor-based pagination?
 
 Cursor-based pagination can outperform offset-based pagination when paginating deeply into a large number of records. DBs commonly execute queries with `OFFSET` clauses by counting past `OFFSET` records one at a time, so each page in offset-based pagination takes slightly longer to load than the last. With cursor-based pagination and an appropriate index, the DB can jump directly to the beginning of each page without scanning.
