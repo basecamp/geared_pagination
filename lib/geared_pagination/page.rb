@@ -4,8 +4,8 @@ module GearedPagination
   class Page
     attr_reader :recordset
 
-    def initialize(portion, from:)
-      @portion, @recordset = portion, from
+    def initialize(portion, from:, deferred_join: false)
+      @portion, @recordset, @deferred_join = portion, from, deferred_join
     end
 
     def number
@@ -13,7 +13,10 @@ module GearedPagination
     end
 
     def records
-      @records ||= @portion.from(recordset.records)
+      @records ||= begin
+        records = @portion.from(recordset.records)
+        deferred_join? ? with_deferred_join(records) : records
+      end
     end
 
 
@@ -54,5 +57,30 @@ module GearedPagination
     def cache_key
       "page/#{@portion.cache_key}"
     end
+
+    def deferred_join?
+      @deferred_join
+    end
+
+    private
+      # inspired by the fast_page gem
+      def with_deferred_join(scope)
+        scope.extending do
+          def deferred_join
+            id_scope = dup
+            id_scope = id_scope.except(:includes) unless references_eager_loaded_tables?
+            ids = id_scope.pluck(:id)
+
+            if ids.empty?
+              @records = []
+            else
+              @records = klass.where(id: ids).in_order_of(:id, ids).to_a
+            end
+
+            @loaded = true
+            self
+          end
+        end.deferred_join
+      end
   end
 end

@@ -13,8 +13,8 @@ module GearedPagination
       @ratios  = Ratios.new(per_page)
     end
 
-    def page(param)
-      Page.new portion_for(param), from: self
+    def page(param, deferred_join: false)
+      Page.new portion_for(param), from: self, deferred_join: deferred_join
     end
 
     def page_count
