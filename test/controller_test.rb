@@ -40,6 +40,11 @@ class GearedPagination::ControllerTest < ActionController::TestCase
     assert_nil response.headers["Link"]
   end
 
+  test "works in both full and api only applications" do
+    assert_includes ActionController::Base.ancestors, GearedPagination::Controller
+    assert_includes ActionController::API.ancestors, GearedPagination::Controller
+  end
+
   private
     def etag_for(*keys)
       %(W/"#{ActiveSupport::Digest.hexdigest(ActiveSupport::Cache.expand_cache_key(keys))}")
