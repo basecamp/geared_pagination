@@ -15,13 +15,31 @@ to be able to page through a recordset.
 
 ## Example
 
+Paginating through messages using the default ratios:
+
 ```ruby
 class MessagesController < ApplicationController
   def index
     set_page_and_extract_portion_from Message.order(created_at: :desc)
   end
 end
+```
 
+Paginating through messages using custom ratios:
+
+```ruby
+class MessagesController < ApplicationController
+  PER_PAGE = [25, 50, 100, 500]
+  
+  def index
+    set_page_and_extract_portion_from Message.order(created_at: :desc), per_page: PER_PAGE
+  end
+end
+```
+
+The associated view:
+
+```ruby
 # app/views/messages/index.html.erb
 
 Showing page <%= @page.number %> of <%= @page.recordset.page_count %> (<%= @page.recordset.records_count %> total messages):
@@ -33,7 +51,6 @@ Showing page <%= @page.number %> of <%= @page.recordset.page_count %> (<%= @page
 <% else %>
   <%= link_to "Next page", messages_path(page: @page.next_param) %>
 <% end %>
-
 ```
 
 ## Cursor-based pagination
