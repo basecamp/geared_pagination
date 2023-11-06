@@ -19,12 +19,8 @@ module GearedPagination
       end
     end
 
-    def next_param(scope)
-      if scope.order_values.none? && scope.limit_value.nil?
-        scope = from(scope)
-      end
-
-      Cursor.encode page_number: page_number + 1, values: scope.last&.slice(*attributes) || {}
+    def next_param(scope = nil, portion: nil)
+      Cursor.encode page_number: page_number + 1, values: (portion || from(scope)).last&.slice(*attributes) || {}
     end
 
 
