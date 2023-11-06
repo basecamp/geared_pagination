@@ -44,7 +44,7 @@ module GearedPagination
 
 
     def next_param
-      @portion.next_param(portion: records)
+      @portion.next_param recordset.records
     end
 
     alias_method :next_number, :next_param

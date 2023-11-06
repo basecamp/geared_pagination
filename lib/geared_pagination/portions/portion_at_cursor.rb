@@ -12,15 +12,18 @@ module GearedPagination
     end
 
     def from(scope)
-      if scope.order_values.none? && scope.limit_value.nil?
-        selection_from(scope).order(orderings).limit(limit)
-      else
-        raise ArgumentError, "Can't paginate relation with ORDER BY or LIMIT clauses (got #{scope.to_sql})"
+      @froms ||= {}
+      @froms[scope] ||= begin
+        if scope.order_values.none? && scope.limit_value.nil?
+          selection_from(scope).order(orderings).limit(limit)
+        else
+          raise ArgumentError, "Can't paginate relation with ORDER BY or LIMIT clauses (got #{scope.to_sql})"
+        end
       end
     end
 
-    def next_param(scope = nil, portion: nil)
-      Cursor.encode page_number: page_number + 1, values: (portion || from(scope)).last&.slice(*attributes) || {}
+    def next_param(scope)
+      Cursor.encode page_number: page_number + 1, values: from(scope).last&.slice(*attributes) || {}
     end
 
 
