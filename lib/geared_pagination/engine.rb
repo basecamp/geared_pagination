@@ -7,4 +7,10 @@ class GearedPagination::Engine < ::Rails::Engine
       ActionController::Base.send :include, GearedPagination::Controller
     end
   end
+
+  if GearedPagination.rails_7_1?
+    initializer "geared_pagination.deprecator" do |app|
+      app.deprecators[:geared_pagination] = GearedPagination.deprecator
+    end
+  end
 end
