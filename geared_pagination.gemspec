@@ -1,6 +1,8 @@
+require_relative "lib/geared_pagination/version"
+
 Gem::Specification.new do |s|
   s.name     = 'geared_pagination'
-  s.version  = '1.1.2'
+  s.version  = GearedPagination::VERSION
   s.authors  = 'David Heinemeier Hansson'
   s.email    = 'david@basecamp.com'
   s.summary  = 'Paginate Active Record sets at variable speeds'

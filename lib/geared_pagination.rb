@@ -1,4 +1,5 @@
 require 'active_support/deprecation'
+require_relative "geared_pagination/version"
 
 module GearedPagination
   def self.rails_7_1?
@@ -6,7 +7,7 @@ module GearedPagination
   end
 
   def self.deprecator
-    @deprecator ||= ActiveSupport::Deprecation.new("1.1.2", "GearedPagination")
+    @deprecator ||= ActiveSupport::Deprecation.new(VERSION, "GearedPagination")
   end
 end
 
