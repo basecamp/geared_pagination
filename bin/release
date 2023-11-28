@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+VERSION=$1
+
+printf "module GearedPagination\n  VERSION = \"$VERSION\"\nend\n" > ./lib/geared_pagination/version.rb
+bundle
+git add Gemfile.lock lib/geared_pagination/version.rb
+git commit -m "Bump version for $VERSION"
+git push
+git tag v$VERSION
+git push --tags
+gem build geared_pagination.gemspec
+gem push "geared_pagination-$VERSION.gem" --host https://rubygems.org
