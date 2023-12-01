@@ -32,7 +32,13 @@ module GearedPagination
     end
 
     def records_count
-      @records_count ||= records.unscope(:limit).unscope(:offset).unscope(:select).count
+      if @records_count.nil?
+        @records_count = records.unscope(:limit).unscope(:offset).unscope(:select).size
+        # records count could be a hash if query has a group by clause -> in this case records count is number of groups
+        @records_count = @records_count.size if @records_count.is_a?(Hash)
+      end
+
+      @records_count
     end
 
     private
