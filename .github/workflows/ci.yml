@@ -10,17 +10,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Ruby 2.7
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install libsqlite3-dev
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install libsqlite3-dev
-
-      - name: Install gem dependencies
-        run:  gem install bundler && bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Run tests
         run: bundle exec rake test
