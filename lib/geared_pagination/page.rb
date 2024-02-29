@@ -64,23 +64,14 @@ module GearedPagination
 
     private
       # inspired by the fast_page gem
-      def with_deferred_join(scope)
-        scope.extending do
-          def deferred_join
-            id_scope = dup
-            id_scope = id_scope.except(:includes) unless references_eager_loaded_tables?
-            ids = id_scope.pluck(:id)
+      def with_deferred_join(relation)
+        limited_ids = relation.except(:includes).pluck(relation.primary_key)
 
-            if ids.empty?
-              @records = []
-            else
-              @records = klass.where(id: ids).in_order_of(:id, ids).to_a
-            end
-
-            @loaded = true
-            self
-          end
-        end.deferred_join
+        if limited_ids.empty?
+          relation.none
+        else
+          relation.where(relation.primary_key => limited_ids)
+        end
       end
   end
 end
