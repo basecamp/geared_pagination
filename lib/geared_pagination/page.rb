@@ -48,7 +48,11 @@ module GearedPagination
     end
 
     alias_method :next_number, :next_param
-    deprecate next_number: "use #next_param instead"
+    if GearedPagination.rails_7_1?
+      deprecate next_number: "use #next_param instead", deprecator: GearedPagination.deprecator
+    else
+      deprecate next_number: "use #next_param instead"
+    end
 
 
     def cache_key

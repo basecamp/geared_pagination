@@ -1,6 +1,8 @@
+require_relative "lib/geared_pagination/version"
+
 Gem::Specification.new do |s|
   s.name     = 'geared_pagination'
-  s.version  = '1.1.2'
+  s.version  = GearedPagination::VERSION
   s.authors  = 'David Heinemeier Hansson'
   s.email    = 'david@basecamp.com'
   s.summary  = 'Paginate Active Record sets at variable speeds'
@@ -12,7 +14,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'activesupport', '>= 5.0'
   s.add_dependency 'addressable', '>= 2.5.0'
 
-  s.add_development_dependency 'bundler', '~> 1.12'
+  s.add_development_dependency 'bundler'
 
   s.files      = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- test/*`.split("\n")
