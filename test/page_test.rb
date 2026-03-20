@@ -40,7 +40,7 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
   end
 
   test "next number" do
-    assert_deprecated do
+    assert_deprecated(GearedPagination.deprecator) do
       assert_equal 2, GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(1).next_number
     end
   end
