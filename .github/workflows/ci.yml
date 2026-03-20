@@ -1,9 +1,12 @@
 name: CI
 on: [push, pull_request]
+permissions: {}
 jobs:
   lint-actions:
     name: GitHub Actions audit
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -20,6 +23,8 @@ jobs:
 
   tests:
     name: Ruby ${{ matrix.ruby }}, ${{ matrix.rails }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -32,6 +37,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
       - name: Set up Ruby
         uses: ruby/setup-ruby@319994f95fa847cf3fb3cd3dbe89f6dcde9f178f # v1.295.0
         with:
