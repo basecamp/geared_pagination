@@ -5,6 +5,7 @@
 
 *.gem
 .byebug_history
+gemfiles/*.gemfile.lock
 
 test/dummy/db/*.sqlite3
 test/dummy/db/*.sqlite3-journal
