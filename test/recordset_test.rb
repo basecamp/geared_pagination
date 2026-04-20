@@ -76,4 +76,10 @@ class GearedPagination::RecordsetTest < ActiveSupport::TestCase
     recordset = GearedPagination::Recordset.new(select_scoped_records, per_page: [ 10, 15, 20 ])
     assert_equal Recording.all.count, recordset.records_count
   end
+
+  test "records count for group by" do
+    select_scoped_records = Recording.all.select(:id, :number).group(:id)
+    recordset = GearedPagination::Recordset.new(select_scoped_records, per_page: [ 10, 15, 20 ])
+    assert_equal Recording.all.count, recordset.records_count
+  end
 end
