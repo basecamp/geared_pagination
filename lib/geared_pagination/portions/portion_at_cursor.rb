@@ -22,6 +22,10 @@ module GearedPagination
       end
     end
 
+    def limit
+      ratios[page_number]
+    end
+
     def next_param(scope)
       Cursor.encode page_number: page_number + 1, values: from(scope).last&.slice(*attributes) || {}
     end
@@ -38,10 +42,6 @@ module GearedPagination
 
       def orderings
         orders.map { |order| [ order.attribute, order.direction ] }.to_h
-      end
-
-      def limit
-        ratios[page_number]
       end
 
       def attributes
