@@ -35,8 +35,12 @@ module GearedPagination
 
       def uri(page:)
         Addressable::URI.parse(request.url).tap do |uri|
-          uri.query_values = (uri.query_values || {}).merge("page" => page)
+          uri.query_values = (uri.query_values || {}).merge("#{cursor_name}".to_sym => page)
         end.to_s
+      end
+
+      def cursor_name
+        GearedPagination.config.cursor_name
       end
   end
 end
