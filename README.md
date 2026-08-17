@@ -74,6 +74,16 @@ Geared Pagination uses the ordered attributes (in the above example, `created_at
 
 Cursors encode the information Geared Pagination needs to query for the corresponding page’s records: the page number for choosing a page size, and the values of each of the ordered attributes (`created_at` and `id`).
 
+Use `@page.full?` to conditionally generate a next-page link without performing a COUNT query:
+
+```erb
+<% if @page.full? %>
+  <%= link_to "Next page", messages_path(page: @page.next_param) %>
+<% end %>
+```
+
+This may generate one extra request when the last page contains exactly as many records as its page size, but avoids counting the entire recordset.
+
 ### When should I use cursor-based pagination?
 
 Cursor-based pagination can outperform offset-based pagination when paginating deeply into a large number of records. DBs commonly execute queries with `OFFSET` clauses by counting past `OFFSET` records one at a time, so each page in offset-based pagination takes slightly longer to load than the last. With cursor-based pagination and an appropriate index, the DB can jump directly to the beginning of each page without scanning.

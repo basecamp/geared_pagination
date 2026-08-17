@@ -29,6 +29,18 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
     assert_not GearedPagination::Recordset.new(Recording.none, per_page: 1000).page(2).before_last?
   end
 
+  test "full" do
+    assert     GearedPagination::Recordset.new(Recording.all, per_page:    1).page(1).full?
+    assert     GearedPagination::Recordset.new(Recording.all, per_page:  120).page(1).full?
+    assert_not GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(1).full?
+  end
+
+  test "full by cursor" do
+    assert     GearedPagination::Recordset.new(Recording.all, ordered_by: :number, per_page:   15).page(cursor).full?
+    assert     GearedPagination::Recordset.new(Recording.all, ordered_by: :number, per_page:  120).page(cursor).full?
+    assert_not GearedPagination::Recordset.new(Recording.all, ordered_by: :number, per_page: 1000).page(cursor).full?
+  end
+
   test "next offset param" do
     assert_equal 2, GearedPagination::Recordset.new(Recording.all, per_page: 1000).page(1).next_param
   end
@@ -60,6 +72,10 @@ class GearedPagination::PageTest < ActiveSupport::TestCase
   end
 
   private
+    def cursor
+      GearedPagination::Cursor.encode(page_number: 1)
+    end
+
     def cache_key(page:, per_page:)
       GearedPagination::Recordset.new(Recording.all, per_page: per_page).page(page).cache_key
     end

@@ -25,6 +25,10 @@ module GearedPagination
       records.load.none?
     end
 
+    def full?
+      records.load.size == @portion.limit
+    end
+
 
     def first?
       number == 1
