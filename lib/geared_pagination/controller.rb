@@ -29,7 +29,11 @@ module GearedPagination
       end
 
       def current_page_param
-        params[:page]
+        params[page_param_name]
+      end
+
+      def page_param_name
+        GearedPagination.config.cursor_name
       end
   end
 end
